@@ -32,15 +32,36 @@ public class MessageControllerTest {
 
         // adds a message
         mvc.perform(MockMvcRequestBuilders
-                .post("/messages")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"message\": \"test message\"}")
-                .accept(MediaType.APPLICATION_JSON))
+                        .post("/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"message\": \"test message\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"message\": \"test message2\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"message\": \"test message3\"}")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/messages")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"message\": \"test message4\"}")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
         // checks that the message has been returned
         mvc.perform(MockMvcRequestBuilders.get("/messages"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[{\"message\":\"test message\"}]")));
+                .andExpect(content().string(equalTo("[{\"message\":\"test message\"},{\"message\":\"test message2\"},{\"message\":\"test message3\"},{\"message\":\"test message4\"}]")));
     }
 }
